@@ -4,7 +4,8 @@
 3.羊毛党过滤，无损耗投放；  
 4.灵活方便接入。  
 
-调用示例：
+调用示例：  
+``` javascript
 <script src="https://chain.pro/candybox/static/candybox.js"></script>  
 <script>  
   var candyBox = new CandyBox();  
@@ -14,3 +15,4 @@
     layout: '2' //布局方式，0 —— 2行1列，1 —— 2行2列，2 —— 3行1列，3 —— 3行2列，4 —— 4行1列，5 —— 4行两列  
   });  
 </script>  
+```
