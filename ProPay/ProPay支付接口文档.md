@@ -13,7 +13,7 @@
 **二、业务申请**
 
 商户事先开通**AppCode(app_code)**和对应的**SecretKey(secret)**，声明需要调用的URL PATH或Body，方可调用相应接口。
-加密算法采用RSA2
+加密算法采用RSA2。
 
 签名（**sign**）生成方式为：
 
@@ -21,15 +21,18 @@
 
 将除sign之外的非空参数，按照名称的字典序进行排序，最后加上Secret
 
-- GET将上述字符串做MD5并转小写，如：
+- GET方式: 将上述字符串做MD5并转小写，如 Secret为：7a86n391ADce
 
 ```
-Secret为：7a86n391ADce，URL参数为app_code=demo&biz_content={"aa":11,"bb":22}&method=propay.pay&timestamp=1546416695000
-得到sign为：MD5(‘demo{"aa":11,"bb":22}propay.pay15464166950007a86n391ADce’) b76fe80a8e482b2bcd1cfae83f498d21
+URL参数为app_code=demo&biz_content={"aa":11,"bb":22}&method=propay.pay&timestamp=1546416695000
+
+得到sign为：MD5(‘demo{"aa":11,"bb":22}propay.pay15464166950007a86n391ADce’) = b76fe80a8e482b2bcd1cfae83f498d21
+
 最后访问参数为：biz_content={"aa":11,"bb":22}&method=propay.pay&sign=b76fe80a8e482b2bcd1cfae83f498d21&app_code=demo&timestamp=1546416695000
 ```
 
-- POST方式如:
+- POST方式:
+
 ```json
 {
 "app_code":"demo",
@@ -38,7 +41,11 @@ Secret为：7a86n391ADce，URL参数为app_code=demo&biz_content={"aa":11,"bb":2
 "biz_content":"{\"aa\":11,\"bb\":22}"
 }
 ```
-加密过程,将除sign之外的参数，按照名称的字典序进行排序，最后加上Secret,MD5(‘‘{"aa":11,"bb":22s}33propay.pay15464166950007a86n391ADce’’) 
+
+加密过程,将除sign之外的参数，按照名称的字典序进行排序，最后加上Secret。
+
+MD5(‘demo{"aa":11,"bb":22}propay.pay15464166950007a86n391ADce’) = b76fe80a8e482b2bcd1cfae83f498d21
+
 ```json
 {
 "app_code":"demo",
@@ -117,10 +124,10 @@ code=40006：用户身份认证错误（签名不对）
 | trade_no    | String   | 是      | 36 | ProPay交易号                                                      |
 | eos_account    | String   | 是    | 12  | EOS账号                                                      |
 | asset    |    |        |   
-| &emsp;amount         | String   | 是     | 20,4 | 金额，如“10.0000”（一般保留4位小数）                         |
-| &emsp;symbol         | String   | 是    |  12 | 交易Token，如“EOS”                                           |
-| &emsp;symbol_account | String   | 是    |  12 | 交易Token的主账号，如“eosio.token” （通过symbol和symbol_account才能唯一确定一token，主链EOS Token的参数是EOS + eosio.token） |
-| &emsp;chain_type | Int   | 是    | 1  | 0(ethereum),1(eosio),2(tron)|
+| &emsp;&emsp;amount         | String   | 是     | 20,4 | 金额，如“10.0000”（一般保留4位小数）                         |
+| &emsp;&emsp;symbol         | String   | 是    |  12 | 交易Token，如“EOS”                                           |
+| &emsp;&emsp;symbol_account | String   | 是    |  12 | 交易Token的主账号，如“eosio.token” （通过symbol和symbol_account才能唯一确定一token，主链EOS Token的参数是EOS + eosio.token） |
+| &emsp;&emsp;chain_type | Int   | 是    | 1  | 0(ethereum),1(eosio),2(tron)|
 | timestamp      | Long   | 是    | 13  | 交易时间(时间戳ms)                                                     |
 | memo           | String   | 是    |   | 格式：商户code+用户uid                                       |
 | trx_id         | String   | 是    |  64 | EOS主链的transaction id （同一trx_id只对应一笔交易，不可重复入账） |
@@ -163,10 +170,10 @@ code=40006：用户身份认证错误（签名不对）
 | order_id    | String   | 是    |  36 | 商家订单Id                                                      |
 | eos_account    | String   | 是    |  12 | EOS账号                                                      |
 | asset    |    |        |   
-| &emsp;amount         | String   | 是 |  20,4    | 金额，如“10.0000”（一般保留4位小数）                         |
-| &emsp;symbol         | String   | 是  |  12   | 交易Token，如“EOS”                                           |
-| &emsp;symbol_account | String   | 是   |  12  | 交易Token的主账号，如“eosio.token” （通过symbol和symbol_account才能唯一确定一token，主链EOS Token的参数是EOS + eosio.token） |
-| &emsp;chain_type | Int   | 是   |  1  | 0(ethereum),1(eosio),2(tron)|
+| &emsp;&emsp;amount         | String   | 是 |  20,4    | 金额，如“10.0000”（一般保留4位小数）                         |
+| &emsp;&emsp;symbol         | String   | 是  |  12   | 交易Token，如“EOS”                                           |
+| &emsp;&emsp;symbol_account | String   | 是   |  12  | 交易Token的主账号，如“eosio.token” （通过symbol和symbol_account才能唯一确定一token，主链EOS Token的参数是EOS + eosio.token） |
+| &emsp;&emsp;chain_type | Int   | 是   |  1  | 0(ethereum),1(eosio),2(tron)|
 
 返回结果：
 
@@ -224,10 +231,10 @@ biz_content
 | trade_no    | String   | 否    | 36   | ProPay交易号                                                       |
 | eos_account    | String   | 是   |12    |                     |
 | asset    |    |        |   
-| &emsp;amount         | String   | 是    |20,4   | 金额，如“10.0000”（一般保留4位小数）                         |
-| &emsp;symbol         | String   | 是    |12   | 交易Token，如“EOS”                                           |
-| &emsp;symbol_account | String   | 是    |12   | 交易Token的主账号，如“eosio.token” （通过symbol和symbol_account才能唯一确定一token，主链EOS Token的参数是EOS + eosio.token） |
-| &emsp;chain_type | Int   | 是   |1    | 0(ethereum),1(eosio),2(tron)|
+| &emsp;&emsp;amount         | String   | 是    |20,4   | 金额，如“10.0000”（一般保留4位小数）                         |
+| &emsp;&emsp;symbol         | String   | 是    |12   | 交易Token，如“EOS”                                           |
+| &emsp;&emsp;symbol_account | String   | 是    |12   | 交易Token的主账号，如“eosio.token” （通过symbol和symbol_account才能唯一确定一token，主链EOS Token的参数是EOS + eosio.token） |
+| &emsp;&emsp;chain_type | Int   | 是   |1    | 0(ethereum),1(eosio),2(tron)|
 | timestamp      | Long   | 是  |13     | 交易时间                                                     |
 | trx_id         | String   | 是     |64  | EOS主链的transaction id （同一trx_id只对应一笔交易，不可重复入账） |
 | status         | Int      | 是      |1 | 状态：0. 待发起交易 1. 交易处理中 2. 交易成功 3. 交易失败    |
@@ -248,6 +255,61 @@ biz_content
 根据商户code，查询商户信息接口；
 
 接口调用方：商户
+
+接口名称：method=propay.accountinfo
+
+方法：HTTP POST
+
+接口输入参数：
+
+| 参数名称   | 参数类型 | 是否必选 | 参数描述              |
+| ---------- | -------- | -------- | --------------------- |
+|  method   | String   | 是       | 固定为query      |
+
+```json
+接口输入例子
+{
+"app_code":"demo",
+"biz_content":"{\"method\":\"query\"}",
+"method":"propay.accountinfo",
+"sign":"958159b2bd821f401c1a11cc2341ae6f",
+"timestamp":1546416695000
+}
+```
+
+返回结果：
+
+| 参数名称 | 参数类型 | 是否必选 | 参数描述 |
+| -------- | -------- | -------- | -------- |
+| code     | Long      | 是       | 状态     |
+| msg  | String   | 是       | 消息     |
+| biz_content     | String     | 是       | 返回结果 |
+| sign     | String     | 是       | 签名 |
+
+biz_content
+
+数组
+
+| 参数名称       | 参数类型 | 是否必选 | 最大长度|参数描述                                 |
+| -------------- | -------- | -------- | ---|--------------------------------------------------- |
+| name           | String   | 是   | 32   | 商户名称                   |
+| email          | String   | 否   | 32   | 商户邮件                   |
+| phone          | String   | 否   | 32   | 商户电话                   |
+| phone          | String   | 否   | 32   | 商户电话                   |
+| note          | String   | 否   | 256   | 商户备注               |
+| created_at        | String   | 否   | 32   | 创建时间          |
+| updated_at          | String   | 否   | 32   | 更新时间             |
+
+```json
+接口返回例子
+{
+    "code": 10000,
+    "msg": "操作成功",
+    "sign": "3c8f23a22bb52a44c3dce2ddd2245a5a",
+    "biz_content": "{\"note\":\"用户测试，如验签场景\",\"updated_at\":\"2019-01-10T11:21:59Z\",\"phone\":\"(+86)13800138000\",\"name\":\"demo测试\",\"created_at\":\"2018-10-16T09:47:32Z\",\"email\":\"admin@demo.com\",\"app_code\":\"demo\"}",
+    "sub_msg": null
+}
+```
 
 **4 对账接口：用户**
 
